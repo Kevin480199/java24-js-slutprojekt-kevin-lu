@@ -1,5 +1,6 @@
 import { getMovieData, searchMovieData } from "/java24-js-slutprojekt-kevin-lu/js/module/API.js";
 import { createTh, createList } from "/java24-js-slutprojekt-kevin-lu/js/module/render.js";
+import { sortTitle } from "/java24-js-slutprojekt-kevin-lu/js/module/sorter.js";
 fetch('/java24-js-slutprojekt-kevin-lu/view/fragments/navbar.html')
   .then(res => res.text())
   .then(html => {
@@ -60,13 +61,15 @@ getMovieData('popular')
 
 
 const form = document.querySelector('form');
-form.addEventListener('submit', event => {
-    event.preventDefault();
-    const select = form.querySelector('select').value;
-    const input = form.querySelector('input').value;
+if(form != null){
+
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+        const select = form.querySelector('select').value;
+        const input = form.querySelector('input').value;
     if(select == 'person'){
         searchMovieData(select, input)
-            .then(data => {
+        .then(data => {
                 const trHeader = document.querySelector('#searchTableHeader');
                 trHeader.innerHTML = '';
                 const trBody = document.querySelector('#searchTableBody');
@@ -82,18 +85,22 @@ form.addEventListener('submit', event => {
                     const tBody = document.querySelector('#search tbody');
                     const tr = document.createElement('tr');
                     tBody.append(tr);
-                    tr.append(img)
+                    const th = document.createElement('th');
+                    tr.append(th);
+                    th.append(img);
+
                     createTh(element.name, tr);
                     createTh(element.popularity, tr);
                     createTh(element.known_for_department, tr);
                     createList(element.known_for, tr)
-                   
+                    
                 })
-
+                attachSortListeners()
+                
             })
-
-    }else if(select == 'movie'){
-        searchMovieData(select, input)
+            
+        }else if(select == 'movie'){
+            searchMovieData(select, input)
             .then(data => {
                 const trHeader = document.querySelector('#searchTableHeader');
                 trHeader.innerHTML = '';
@@ -101,9 +108,9 @@ form.addEventListener('submit', event => {
                 trBody.innerHTML = '';
                 createTh('Image' , trHeader);
                 createTh('Title' , trHeader);
+                createTh('Popularity' , trHeader);
                 createTh('Release Date' , trHeader);
                 createTh('Description' , trHeader);
-                createTh('Popularity' , trHeader);
                 data.results.forEach(element =>{
                     const img = document.createElement('img');
                     img.src = `https://image.tmdb.org/t/p/w200${element.poster_path}`;
@@ -112,12 +119,20 @@ form.addEventListener('submit', event => {
                     tBody.append(tr);
                     tr.append(img)
                     createTh(element.title, tr);
+                    createTh(element.popularity, tr)
                     createTh(element.release_date, tr);
                     createTh(element.overview, tr);
-                    createTh(element.popularity, tr)
-                   
+                    
                 })
-
+                attachSortListeners()
+                
             })
-    }
-})
+        }
+    })
+}
+function attachSortListeners() {
+    const header = document.querySelectorAll('#searchTableHeader th');
+    // TODO sortTitle reagera olika beroende på url hämtningen
+    header[1]?.addEventListener('click', sortTitle);
+    header[2]?.addEventListener('click', sortPopularity);
+}
