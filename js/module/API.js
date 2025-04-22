@@ -27,3 +27,18 @@ export async function searchMovieData(choice, searchTerm){
     }
     
 }
+
+export async function getRandomMovie() {
+    const API_KEY = "58d75cc74370bc45ffc43a27277b1743";
+
+    const maxPages = 500; // TMDB only lets you access up to 500 pages
+    const randomPage = Math.floor(Math.random() * maxPages) + 1;
+
+    const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${randomPage}`);
+    const data = await response.json();
+
+    const movies = data.results;
+    const randomMovie = movies[Math.floor(Math.random() * movies.length)];
+
+    return randomMovie;
+}

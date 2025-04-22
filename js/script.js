@@ -1,6 +1,7 @@
 import { getMovieData, searchMovieData } from "/java24-js-slutprojekt-kevin-lu/js/module/API.js";
 import { createTh, createList } from "/java24-js-slutprojekt-kevin-lu/js/module/render.js";
-import { sortTitle } from "/java24-js-slutprojekt-kevin-lu/js/module/sorter.js";
+import { sortTitle, sortPopularity } from "/java24-js-slutprojekt-kevin-lu/js/module/sorter.js";
+import { playGame } from "/java24-js-slutprojekt-kevin-lu/js/module/game.js";
 fetch('/java24-js-slutprojekt-kevin-lu/view/fragments/navbar.html')
   .then(res => res.text())
   .then(html => {
@@ -10,6 +11,7 @@ fetch('/java24-js-slutprojekt-kevin-lu/view/fragments/navbar.html')
 
 getMovieData('top_rated')
     .then(data => {
+        data.results.splice(-10);
         data.results.forEach(element => {
             const img = document.createElement('img');
             img.src = `https://image.tmdb.org/t/p/w200${element.poster_path}`;
@@ -35,6 +37,7 @@ getMovieData('top_rated')
     })
 getMovieData('popular')
     .then(data => {
+        data.results.splice(-10);
         data.results.forEach(element => {
             const img = document.createElement('img');
             img.src = `https://image.tmdb.org/t/p/w200${element.poster_path}`;
@@ -132,7 +135,12 @@ if(form != null){
 }
 function attachSortListeners() {
     const header = document.querySelectorAll('#searchTableHeader th');
-    // TODO sortTitle reagera olika beroende på url hämtningen
+    // 
     header[1]?.addEventListener('click', sortTitle);
     header[2]?.addEventListener('click', sortPopularity);
+}
+
+const reset = document.querySelector('#reset');
+if(reset != null){
+    reset.addEventListener('click', playGame)
 }

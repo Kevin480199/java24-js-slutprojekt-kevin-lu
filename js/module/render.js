@@ -17,3 +17,27 @@ export function createList(array, tr){
     })
     tr.append(ul)
 }
+
+export function addButtonAndPicture(element, div, correctAnswer){
+    console.log(element)
+    const img = document.createElement('img');
+    img.src = `https://image.tmdb.org/t/p/w200${element.poster_path}`;
+    div.append(img);
+    img.addEventListener('click', () => {
+        if(correctAnswer.title == element.title){
+            let resultDiv = document.querySelector('#result')
+            resultDiv.innerHTML = '';
+            const p = document.createElement('p')
+            p.innerText = `${element.title} is correct`
+            resultDiv.append(p)
+            console.log('guessed correct')
+        }else{
+            let resultDiv = document.querySelector('#result')
+            resultDiv.innerText = '';
+            const p = document.createElement('p')
+            p.innerText = `${element.title} is wrong`
+            resultDiv.append(p);
+            console.log('wrong answer')
+        }
+    });
+}
