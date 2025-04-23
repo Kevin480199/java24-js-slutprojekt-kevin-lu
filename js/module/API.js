@@ -1,3 +1,4 @@
+import { Movie } from "/java24-js-slutprojekt-kevin-lu/js/class/movie.js";
 export async function getMovieData(choice){
     const API_KEY = "58d75cc74370bc45ffc43a27277b1743";
     const url = `https://api.themoviedb.org/3/movie/${choice}?api_key=${API_KEY}&language=en-US&page=1`;
@@ -39,6 +40,6 @@ export async function getRandomMovie() {
 
     const movies = data.results;
     const randomMovie = movies[Math.floor(Math.random() * movies.length)];
-
-    return randomMovie;
+    const movie = new Movie(randomMovie)
+    return movie;
 }

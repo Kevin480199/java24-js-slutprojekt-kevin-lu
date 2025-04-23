@@ -11,6 +11,7 @@ fetch('/java24-js-slutprojekt-kevin-lu/view/fragments/navbar.html')
 
 getMovieData('top_rated')
     .then(data => {
+        // Removes last 10 elements from array
         data.results.splice(-10);
         data.results.forEach(element => {
             const img = document.createElement('img');
@@ -68,8 +69,17 @@ if(form != null){
 
     form.addEventListener('submit', event => {
         event.preventDefault();
+        const div = document.querySelector('#searchError')
+        div.innerText = '';
         const select = form.querySelector('select').value;
         const input = form.querySelector('input').value;
+    // Do something if searchbar is empty
+    if(input.trim() === ''){
+        console.log('searchbar is empty')
+        const p = document.createElement('p');
+        p.innerText = 'Searchbar is empty'
+        div.append(p)
+    }
     if(select == 'person'){
         searchMovieData(select, input)
         .then(data => {
