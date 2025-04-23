@@ -1,22 +1,25 @@
-import { createTh, createList } from "/java24-js-slutprojekt-kevin-lu/js/module/render.js";
+import { createTh, createList, showError } from "/java24-js-slutprojekt-kevin-lu/js/module/render.js";
 import { getMovieData, searchMovieData } from "/java24-js-slutprojekt-kevin-lu/js/module/API.js";
+import { movieData } from "/java24-js-slutprojekt-kevin-lu/js/script.js";
 let sortAsc = 1;
 export function sortTitle(event){
     event.preventDefault();
     const table = document.querySelector('table');
     const choice = document.querySelector('select').value;
     const searchTerm = document.querySelector('input').value;
-    searchMovieData(choice, searchTerm)
-        .then(data =>{
+    const div = document.querySelector('#searchError');
+    div.innerHTML = '';
+    console.log(movieData.results)
+        
             let sortedByTitle;
             // Check if there is a column namned 'title'
-            if (data.results.length > 0 && 'title' in data.results[0]) {
+            if (movieData.results.length > 0 && 'title' in movieData.results[0]) {
                 console.log("The 'title' column exists!");
                 if(sortAsc === 1){
-                    sortedByTitle = sortByColumn(data.results, 'title')
+                    sortedByTitle = sortByColumn(movieData.results, 'title')
                     sortAsc = 0;
                 }else{
-                    sortedByTitle = sortByColumn(data.results, 'title', false)
+                    sortedByTitle = sortByColumn(movieData.results, 'title', false)
                     sortAsc = 1;
                 }
                 const trBody = document.querySelector('#searchTableBody');
@@ -35,13 +38,13 @@ export function sortTitle(event){
                 
             })
             // Check if there is a column named 'name'
-            } else if(data.results.length > 0 && 'name' in data.results[0]){
+            } else if(movieData.results.length > 0 && 'name' in movieData.results[0]){
                 console.log("The 'name' column found.");
                 if(sortAsc === 1){
-                    sortedByTitle = sortByColumn(data.results, 'name')
+                    sortedByTitle = sortByColumn(movieData.results, 'name')
                     sortAsc = 0;
                 }else{
-                    sortedByTitle = sortByColumn(data.results, 'name', false)
+                    sortedByTitle = sortByColumn(movieData.results, 'name', false)
                     sortAsc = 1;
                 }
                 console.log(sortedByTitle)
@@ -62,22 +65,22 @@ export function sortTitle(event){
             })
             }
             
-        })
 
 }
-// TODO Implement this function
+
 export function sortPopularity(event){
     event.preventDefault();
     const choice = document.querySelector('select').value;
     const searchTerm = document.querySelector('input').value;
-    searchMovieData(choice, searchTerm)
-        .then(data => {
+    const div = document.querySelector('#searchError');
+    div.innerHTML = '';
+    
             let sortedByTitle;
             if(sortAsc === 1){
-                sortedByTitle = sortByColumn(data.results, 'popularity')
+                sortedByTitle = sortByColumn(movieData.results, 'popularity')
                 sortAsc = 0;
             }else{
-                sortedByTitle = sortByColumn(data.results, 'popularity', false)
+                sortedByTitle = sortByColumn(movieData.results, 'popularity', false)
                 sortAsc = 1;
             }
             if(choice === 'person'){
@@ -114,7 +117,7 @@ export function sortPopularity(event){
                 
             })
             }
-        })
+        
 }
 // ChatGPT har hjälpt mig med detta
 
@@ -134,3 +137,29 @@ export function sortPopularity(event){
       return 0;
     });
   }
+
+
+
+
+// Du behöver inte göra exakt såhär men det är ett alternativ på hur du kan tänka kring det
+//   let movies = []
+
+// //   i eventlistenern
+// addEventListener('submit', async ()=>{
+//     movies = getMovies()
+//     renderMovies(movies)
+// })
+
+// addEventListener('click' ()=>{
+
+//     movies = sortBy(movies)
+//     render(Movies)
+// })
+
+
+/**
+ * Dela upp koden i filer per html-sida
+ * Välj ut delar av koden som inte är i en funktion nu och lägg in det i en funktion, så att det blir lättare att fö en överblick och så att det går att återanvända
+ * Kommentarer - ta bort de som förklarar de uppenbara. Lägg till sammanfattningar. Rad 14 i denna fil är bra eftersom den ger kontext
+ * Se till att skicka så få requests som möjligt, sortera redan hämtad data
+ */

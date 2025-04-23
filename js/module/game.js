@@ -1,7 +1,11 @@
 import { getRandomMovie } from "/java24-js-slutprojekt-kevin-lu/js/module/API.js";
-import { addButtonAndPicture } from "/java24-js-slutprojekt-kevin-lu/js/module/render.js";
+import { addButtonAndPicture, showError } from "/java24-js-slutprojekt-kevin-lu/js/module/render.js";
+
+
 export function playGame(event){
     event.preventDefault();
+    const div = document.querySelector('#searchError')
+    div.innerHTML = '';
     retrieveMoviesArray()
         .then(movies => {
             console.log(movies)
@@ -18,6 +22,13 @@ export function playGame(event){
                 addButtonAndPicture(element, gameDiv, correctMovie);
             })
         })
+        .catch(
+            error =>{
+                console.log(error)
+                gameDiv.innerHTML = '';
+                showError(div, error)
+            }
+        )
         
     
 }
@@ -33,6 +44,7 @@ async function retrieveMoviesArray(){
         return movieArray;
     } catch (error) {
         console.error("Error retrieving movies:", error);
+        throw new Error("Failed to fetch data: " + error.message);
         return [];
     }
 }

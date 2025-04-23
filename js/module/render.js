@@ -41,3 +41,41 @@ export function addButtonAndPicture(element, div, correctAnswer){
         }
     });
 }
+
+export function showError(div, error){
+    const p = document.createElement('p');
+    p.innerText = error;
+    div.append(p)
+
+}
+
+export function renderNavbar(){
+    fetch('/java24-js-slutprojekt-kevin-lu/view/fragments/navbar.html')
+   .then(res => res.text())
+   .then(html => {
+    const container = document.querySelector('#navbar');
+    container.innerHTML = html;
+  });
+}
+
+export function renderSearchbarError(text,div){
+    const p = document.createElement('p');
+        p.innerText = text;
+        div.append(p)
+}
+
+export function renderTable(tBody, tr, img, element){
+    tBody.append(tr);
+    const th1 = document.createElement('th');
+    tr.append(th1);
+    th1.append(img)
+    const th2 = document.createElement('th');
+    th2.innerText = element.title;
+    tr.append(th2)
+    const th3 = document.createElement('th');
+    th3.innerText = element.release_date;
+    tr.append(th3);
+    const th4 = document.createElement('th');
+    th4.innerText = element.vote_average;
+    tr.append(th4)
+}
