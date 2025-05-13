@@ -1,4 +1,6 @@
-import { Movie } from "/java24-js-slutprojekt-kevin-lu/js/class/movie.js";
+// includes all calls to the The Movie DataBase API.
+// API used from: https://www.themoviedb.org/
+import { Movie } from "../class/movie.js";
 
 
 export async function getMovieData(choice){

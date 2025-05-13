@@ -1,7 +1,9 @@
+// includes everything that involves html-tags whenever a new tag is generated and attached to the body. GUI elements are generated here such as tables for listing movies/actors, gmae pictures, Error message. Fetching navbar from fragments are also found here.
 export function createTh(text, tr){
     const th = document.createElement('th');
     th.innerText = text;
     tr.append(th);
+    return th;
 }
 
 export function createList(array, tr){
@@ -50,7 +52,7 @@ export function showError(div, error){
 }
 
 export function renderNavbar(){
-    fetch('/java24-js-slutprojekt-kevin-lu/view/fragments/navbar.html')
+    fetch('./view/fragments/navbar.html')
    .then(res => res.text())
    .then(html => {
     const container = document.querySelector('#navbar');

@@ -1,3 +1,4 @@
+// includes all the function required to run the game that is included in the homepage.
 import { getRandomMovie } from "/java24-js-slutprojekt-kevin-lu/js/module/API.js";
 import { addButtonAndPicture, showError } from "/java24-js-slutprojekt-kevin-lu/js/module/render.js";
 

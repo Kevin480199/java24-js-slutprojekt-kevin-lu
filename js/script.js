@@ -1,6 +1,6 @@
-import { getMovieData, searchMovieData } from "/java24-js-slutprojekt-kevin-lu/js/module/API.js";
-import { createTh, createList, showError, renderNavbar, renderSearchbarError } from "/java24-js-slutprojekt-kevin-lu/js/module/render.js";
-import { sortTitle, sortPopularity } from "/java24-js-slutprojekt-kevin-lu/js/module/sorter.js";
+import { searchMovieData } from "./module/API.js";
+import { createTh, createList, showError, renderNavbar, renderSearchbarError } from "./module/render.js";
+import { sortTitle, sortPopularity } from "./module/sorter.js";
 
 renderNavbar();
 export let movieData;
@@ -31,8 +31,10 @@ if(form != null){
                 return;
             }
                 createTh('Image' , trHeader);
-                createTh('Name' , trHeader);
-                createTh('Popularity' , trHeader);
+                let th = createTh('Name' , trHeader);
+                th.classList.add('pointer');
+                th = createTh('Popularity' , trHeader);
+                th.classList.add('pointer')
                 createTh('Known For' , trHeader);
                 createTh('Movies' , trHeader);
                 data.results.forEach(element =>{
@@ -65,8 +67,10 @@ if(form != null){
                     return;
                 }
                 createTh('Image' , trHeader);
-                createTh('Title' , trHeader);
-                createTh('Popularity' , trHeader);
+                let th = createTh('Title' , trHeader);
+                th.classList.add('pointer')
+                th = createTh('Popularity' , trHeader);
+                th.classList.add('pointer')
                 createTh('Release Date' , trHeader);
                 createTh('Description' , trHeader);
                 data.results.forEach(element =>{

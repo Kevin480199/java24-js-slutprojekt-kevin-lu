@@ -1,6 +1,7 @@
-import { createTh, createList, showError } from "/java24-js-slutprojekt-kevin-lu/js/module/render.js";
-import { getMovieData, searchMovieData } from "/java24-js-slutprojekt-kevin-lu/js/module/API.js";
-import { movieData } from "/java24-js-slutprojekt-kevin-lu/js/script.js";
+// includes all the functins to sort everything by name/title or popularity.
+import { createTh, createList, showError } from "./render.js";
+import { getMovieData, searchMovieData } from "./API.js";
+import { movieData } from "../script.js";
 let sortAsc = 1;
 export function sortTitle(event){
     event.preventDefault();
